@@ -4,7 +4,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { AppWebsocket } from '@holochain/conductor-api';
 
 import { calendarEventsTypeDefs, calendarEventsResolvers } from '../../dist';
-import { AppWebsocketMock, randomHash } from 'holochain-ui-test-utils';
+import { AppWebsocketMock, DnaMock } from 'holochain-ui-test-utils';
 import { CalendarEventsMock } from './calendar-events.mock';
 
 const rootTypeDef = gql`
@@ -20,12 +20,12 @@ const rootTypeDef = gql`
 // TODO: add your own typeDefs to rootTypeDef
 const allTypeDefs = [rootTypeDef, calendarEventsTypeDefs];
 
+const dnaMock = new DnaMock({ todo_rename_zome: new CalendarEventsMock() });
 async function getAppWebsocket() {
   if (process.env.CONDUCTOR_URL)
     return AppWebsocket.connect(process.env.CONDUCTOR_URL);
   else {
-    const dnaMock = new CalendarEventsMock();
-    return new AppWebsocketMock(randomHash(), { todo_rename_zome: dnaMock });
+    return new AppWebsocketMock([dnaMock]);
   }
 }
 
