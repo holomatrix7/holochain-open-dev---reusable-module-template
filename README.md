@@ -14,21 +14,13 @@ This is what is has included:
   - Reusable CustomElements with `lit-element`
   - Automated demoing with `storybook`, also publishing to `gh-pages`
   - Automated testing with `web-test-runner`
-  - Automated end-to-end testing
-  - GraphQl common libraries and setup code
+  - Automated end-to-end testing with the holochain zome
+  - GraphQl common libraries and scaffold code
   - See [open-wc](https://open-wc.org/) for all the available tools and documentation
 
 ## How to scaffold a holochain reusable module
 
-1. Duplicate this repo: 
-
-```bash
-git clone --bare https://github.com/holochain-open-dev/reusable-module-template
-cd reusable-module-template.git
-git push --mirror https://github.com/exampleuser/new-repository.git
-cd .. && rm -rf reusable-module-template.git
-```
-
+1. Create a new repository from this template (you can use the `Use this template` button on the top of this page).
 2. Look for all the `TODO` keyword to see the places that need to be changed.
 3. [Add CircleCI integration](https://circleci.com/docs/enterprise/quick-start/) with the repository.
 4. Remove this section of this README.md until this next line.
