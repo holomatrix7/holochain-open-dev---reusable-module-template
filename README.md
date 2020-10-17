@@ -67,7 +67,7 @@ todo_rename_zome = {git = "TODO_CHANGE_MODULE_URL", package = "todo_rename_zome"
 extern crate todo_rename_zome;
 ```
 6. Add the zome into your `*.dna.workdir/dna.json` file.
-7. Compile the DNA with the usual `CARGO_TARGET=target cargo build --release --target wasm32-unknown-unknown`.
+7. Compile the DNA with the usual `CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown`.
 
 ### Using the UI module
 
