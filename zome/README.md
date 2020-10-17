@@ -13,7 +13,7 @@ To change the code, you can work either opening VSCode inside the root folder of
 ## Building
 
 ```bash
-CARGO_TARGET=target cargo build --release --target wasm32-unknown-unknown
+CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown
 dna-util -c todo_rename_zome.dna.workdir/
 ```
 
