@@ -9,7 +9,7 @@ UI module for the `calendar-events-zome`.
 
 ## Local Demo with `@web/dev-server`
 
-First, [build the holochain dna](/zomes/README.md). Run this from inside the `nix-shell` in which you have the `holochain` binary install.
+First, [build the holochain dna](/zomes/README.md).
 
 Run this from inside the `nix-shell` in which you have the `holochain` binary install.
 
@@ -17,7 +17,7 @@ Run this from inside the `nix-shell` in which you have the `holochain` binary in
 npm start
 ```
 
-To run a local development server that serves the basic demo located in `demo/index.html`
+This will serve a local development server that serves the basic demo located in `demo/index.html` at `localhost:8080/demo`.
 Take into account that this will run the holochain conductor in the background and connect the UI to the actual conductor.
 
 ## Running only the UI
@@ -32,7 +32,7 @@ npm run start-ui
 npm run build
 ```
 
-## Testing with Karma
+## Testing with @web/test-runner
 
 To run the suite of karma tests, run
 
@@ -40,8 +40,14 @@ To run the suite of karma tests, run
 npm run test
 ```
 
-To run the tests in watch mode (for <abbr title="test driven development">TDD</abbr>, for example), run
+To run the tests in watch mode (for <abbr title="test driven development">TDD</abbr>, for example), run two terminals:
 
+In the first terminal:
+```bash
+npm run build-watch
+```
+
+In the second terminal:
 ```bash
 npm run test-watch
 ```
