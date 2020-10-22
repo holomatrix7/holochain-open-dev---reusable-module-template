@@ -30,7 +30,6 @@
     "@graphql-tools/schema": "^6.2.3",
     "@holochain/conductor-api": "guillemcordoba/holochain-conductor-api#build",
     "graphql": "^15.3.0",
-    "holochain-ui-test-utils": "github:guillemcordoba/holochain-ui-test-utils",
     "lit-element": "^2.4.0",
     "lit-html": "^1.3.0"
   },
@@ -56,6 +55,7 @@
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
     "gh-pages": "^3.1.0",
+    "holochain-ui-test-utils": "github:guillemcordoba/holochain-ui-test-utils",
     "husky": "^1.0.0",
     "lint-staged": "^10.0.0",
     "prettier": "^2.0.4",
