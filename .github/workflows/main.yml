@@ -27,7 +27,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/zome
           CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown
-          dna-util -c profiles.dna.workdir/
+          dna-util -c todo_rename_zome.dna.workdir/
           
       - name: test-holochain
         run: |
