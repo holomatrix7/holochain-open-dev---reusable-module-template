@@ -5,7 +5,7 @@ This repository is meant to be a scaffolding starting point to build reusable ho
 This is what is has included:
 
 - UI and Zome Instructions to use the module in a bigger app
-- CircleCI automatic integration with building and testing
+- Github Actions automatic integration with building and testing
 - Zome
   - Basic sample code 
   - Integrated tests with tryorama
@@ -22,8 +22,7 @@ This is what is has included:
 
 1. Create a new repository from this template (you can use the `Use this template` button on the top of this page).
 2. Look for all the `TODO` keyword to see the places that need to be changed.
-3. [Add CircleCI integration](https://circleci.com/docs/enterprise/quick-start/) with the repository.
-4. Remove this section of this README.md until this next line.
+3. Remove this section of this README.md until this next line.
 
 ---
 
