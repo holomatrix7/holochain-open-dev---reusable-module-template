@@ -21,7 +21,7 @@ This is what is has included:
 ## How to scaffold a holochain reusable module
 
 1. Create a new repository from this template (you can use the `Use this template` button on the top of this page).
-2. Look for all the `TODO` keyword to see the places that need to be changed.
+2. Look for all the `TODO` keyword to see the places that need to be changed. (NOTE: replacing it inside the files can easily be done with your IDE, and for renaming files & directories you can use this bash one-liner: `new_name=YOUR_NEW_NAME_HERE find . -name "*todo_rename*" | while read line ; do mv $line $(echo $line | sed 's/todo_rename/$new_name/g') ; done`)
 3. Remove this section of this README.md until this next line.
 
 ---
