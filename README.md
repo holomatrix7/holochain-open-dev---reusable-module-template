@@ -65,8 +65,14 @@ todo_rename_zome = {git = "TODO_CHANGE_MODULE_URL", package = "todo_rename_zome"
 ```rust
 extern crate todo_rename_zome;
 ```
-6. Add the zome into your `*.dna.workdir/dna.json` file.
-7. Compile the DNA with the usual `CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown`.
+6. If you haven't yet, in the top level `Cargo.toml` file of your DNA, add this to specify which version of holochain you want to target:
+```toml
+hc_utils = {git = "https://github.com/guillemcordoba/hc-utils", branch = "develop", package = "hc_utils"}
+hdk3 = {git = "https://github.com/holochain/holochain", rev = "7037aa2ccfb1ad9a8ece98eb379686f605dc1a0c", package = "hdk3"}
+holo_hash = {git = "https://github.com/holochain/holochain", rev = "7037aa2ccfb1ad9a8ece98eb379686f605dc1a0c", package = "holo_hash"}
+```
+7. Add the zome into your `*.dna.workdir/dna.json` file.
+8. Compile the DNA with the usual `CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown`.
 
 ### Using the UI module
 
