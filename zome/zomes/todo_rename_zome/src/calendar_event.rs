@@ -1,6 +1,7 @@
 use crate::utils;
 use hdk3::prelude::timestamp::Timestamp;
 use hdk3::prelude::*;
+use hc_utils::WrappedEntryHash;
 
 #[derive(Clone, SerializedBytes, Serialize, Deserialize)]
 pub enum EventLocation {
@@ -29,8 +30,8 @@ pub struct CreateCalendarEventInput {
 }
 pub fn create_calendar_event(
     calendar_event_input: CreateCalendarEventInput,
-) -> ExternResult<EntryHash> {
-    let agent_info = agent_info!()?;
+) -> ExternResult<WrappedEntryHash> {
+    let agent_info = agent_info()?;
 
     let calendar_event = CalendarEvent {
         created_by: agent_info.agent_latest_pubkey,
@@ -41,27 +42,30 @@ pub fn create_calendar_event(
         invitees: calendar_event_input.invitees,
     };
 
-    create_entry!(calendar_event.clone())?;
+    create_entry(&calendar_event)?;
 
-    let calendar_event_hash = hash_entry!(calendar_event)?;
+    let calendar_event_hash = hash_entry(&calendar_event)?;
 
     let path = Path::from("calendar_events");
 
     path.ensure()?;
 
-    create_link!(path.hash()?, calendar_event_hash.clone())?;
+    create_link(path.hash()?, calendar_event_hash.clone(), ())?;
 
-    Ok(calendar_event_hash)
+    Ok(WrappedEntryHash(calendar_event_hash))
 }
 
-pub fn get_all_calendar_events() -> ExternResult<Vec<(EntryHash, CalendarEvent)>> {
+pub fn get_all_calendar_events() -> ExternResult<Vec<(WrappedEntryHash, CalendarEvent)>> {
     let path = Path::from("calendar_events");
 
-    let links = get_links!(path.hash()?)?;
+    let links = get_links(path.hash()?, None)?;
 
     links
         .into_inner()
         .iter()
-        .map(|link| utils::try_get_and_convert::<CalendarEvent>(link.target.clone()))
+        .map(|link| {
+            let event: CalendarEvent = utils::try_get_and_convert(link.target.clone())?;
+            Ok((WrappedEntryHash(link.target.clone()), event))
+        })
         .collect()
 }
