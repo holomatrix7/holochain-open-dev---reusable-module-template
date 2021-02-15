@@ -1,16 +1,14 @@
 use crate::utils;
-use hdk3::prelude::timestamp::Timestamp;
 use hdk3::prelude::*;
 use hc_utils::WrappedEntryHash;
 
-#[derive(Clone, SerializedBytes, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum EventLocation {
     Resource(EntryHash),
     Custom(String),
 }
 
 #[hdk_entry(id = "calendar_event", visibility = "public")]
-#[derive(Clone)]
 pub struct CalendarEvent {
     pub created_by: AgentPubKey,
     pub title: String,
@@ -20,7 +18,7 @@ pub struct CalendarEvent {
     pub invitees: Vec<AgentPubKey>,
 }
 
-#[derive(Clone, Serialize, Deserialize, SerializedBytes)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct CreateCalendarEventInput {
     pub title: String,
     pub start_time: Timestamp,
