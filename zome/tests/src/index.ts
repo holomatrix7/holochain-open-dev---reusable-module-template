@@ -30,11 +30,6 @@ const installation: InstallAgentsHapps = [
   ],
 ];
 
-const dateToTimestamp = (date) => [
-  Math.floor(date / 1000),
-  (date % 1000) * 1000,
-];
-
 orchestrator.registerScenario(
   "create and get a calendar event",
   async (s, t) => {

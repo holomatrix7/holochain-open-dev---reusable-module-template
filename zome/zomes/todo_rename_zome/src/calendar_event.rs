@@ -1,5 +1,5 @@
 use crate::utils;
-use hdk3::prelude::*;
+use hdk::prelude::*;
 use hc_utils::WrappedEntryHash;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]

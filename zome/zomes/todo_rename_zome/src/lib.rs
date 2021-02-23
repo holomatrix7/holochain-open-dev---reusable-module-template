@@ -1,4 +1,4 @@
-use hdk3::prelude::*;
+use hdk::prelude::*;
 use hc_utils::WrappedEntryHash;
 
 mod calendar_event;
@@ -24,11 +24,9 @@ pub fn create_calendar_event(
     calendar_event::create_calendar_event(calendar_event_input)
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct GetAllCalendarEventsOutput(Vec<(WrappedEntryHash, calendar_event::CalendarEvent)>);
 #[hdk_extern]
-pub fn get_all_calendar_events(_: ()) -> ExternResult<GetAllCalendarEventsOutput> {
+pub fn get_all_calendar_events(_: ()) -> ExternResult<Vec<(WrappedEntryHash, calendar_event::CalendarEvent)>> {
     let calendar_events = calendar_event::get_all_calendar_events()?;
 
-    Ok(GetAllCalendarEventsOutput(calendar_events))
+    Ok(calendar_events)
 }
