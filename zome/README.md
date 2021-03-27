@@ -2,19 +2,19 @@
 
 This folder has an example DNA for the `todo_rename_zome` zome. The actual code for the zome is in `zomes/todo_rename_zome`.
 
-To change the code, you can work either opening VSCode inside the root folder of the repo or in this folder, you should have rust intellisense either way. It is recommended to use the `rust-analyzer` VSCode extension.
+To change the code, you can work either opening VSCode inside the root folder of the repo or in this folder, you should have rust intellisense either way.
 
-## Requirements
-
-- Having [`nix-shell` installed](https://developer.holochain.org/docs/install/).
-- Have [`holochain-run-dna`](https://www.npmjs.com/package/@holochain-open-dev/holochain-run-dna) installed globally, and the `lair-keystore` described in its README as well.
+All the instructions here assume you are running them inside the nix-shell at the root of the repository. For more info, see the [developer setup](/dev-setup.md).
 
 ## Building
 
 ```bash
 CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown
-dna-util -c todo_rename_zome.dna.workdir/
+hc dna pack workdir/dna
+hc app pack workdir/happ
 ```
+
+This should create a `workdir/happ/sample.happ` file.
 
 ## Testing
 
@@ -31,9 +31,7 @@ npm test
 After having built the DNA:
 
 ```bash
-holochain-run-dna todo_rename_zome.dna.gz
+hc s generate workdir/happ/sample.happ --run=8888
 ```
 
 Now `holochain` will be listening at port `8888`;
-
-Restart the command if it fails (flaky holochain start).

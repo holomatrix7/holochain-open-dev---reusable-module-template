@@ -1,0 +1,8 @@
+---
+manifest_version: "1"
+name: sample
+uuid: 00000000-0000-0000-0000-000000000000
+properties: ~
+zomes:
+  - name: todo_rename_zome
+    bundled: ../../target/wasm32-unknown-unknown/release/todo_rename_zome.wasm

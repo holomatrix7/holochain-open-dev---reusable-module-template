@@ -10,7 +10,7 @@ import path from "path";
 const conductorConfig = Config.gen({});
 
 // Construct proper paths for your DNAs
-const calendarEvents = path.join(__dirname, "../../todo_rename_zome.dna.gz");
+const calendarEvents = path.join(__dirname, "../../workdir/dna/sample.dna");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
 

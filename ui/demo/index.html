@@ -14,13 +14,22 @@
 
     <script type="module">
       import { html, render } from 'lit-html';
-      import { CalendarEventsModule } from '../dist';
-      import { setupApolloClient } from '../test/mocks/setupApolloClient';
+      import ConductorApi from '@holochain/conductor-api';
+      import { HodCalendarEvent } from '../dist';
 
-      // TODO: change the module name
-      setupApolloClient().then(client =>
-        new CalendarEventsModule({ apolloClient: client }).install()
-      );
+      (async function () {
+        let store = undefined;
+        const appWebsocket = await ConductorApi.AppWebsocket.connect(
+          'ws://localhost:8888'
+        );
+        const appInfo = await appWebsocket.appInfo({
+          installed_app_id: 'test-app',
+        });
+
+        const cellId = appInfo.cell_data[0].cell_id;
+
+        customElements.define('hod-calendar-event', HodCalendarEvent);
+      })();
     </script>
   </body>
 </html>

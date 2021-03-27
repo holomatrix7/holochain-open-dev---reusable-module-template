@@ -1,5 +1,5 @@
 use hdk::prelude::*;
-use hc_utils::WrappedEntryHash;
+use holo_hash::EntryHashB64;
 
 mod calendar_event;
 mod utils;
@@ -7,7 +7,7 @@ mod utils;
 // TODO: Actually code the zome, all this code is just for reference and quick copy-paste
 
 pub fn err(reason: &str) -> WasmError {
-    WasmError::Host(String::from(reason))
+    WasmError::Guest(String::from(reason))
 }
 
 entry_defs![
@@ -20,12 +20,12 @@ entry_defs![
 #[hdk_extern]
 pub fn create_calendar_event(
     calendar_event_input: calendar_event::CreateCalendarEventInput,
-) -> ExternResult<WrappedEntryHash> {
+) -> ExternResult<EntryHashB64> {
     calendar_event::create_calendar_event(calendar_event_input)
 }
 
 #[hdk_extern]
-pub fn get_all_calendar_events(_: ()) -> ExternResult<Vec<(WrappedEntryHash, calendar_event::CalendarEvent)>> {
+pub fn get_all_calendar_events(_: ()) -> ExternResult<Vec<(EntryHashB64, calendar_event::CalendarEvent)>> {
     let calendar_events = calendar_event::get_all_calendar_events()?;
 
     Ok(calendar_events)

@@ -1,4 +1,3 @@
-import { ApolloClient } from '@apollo/client/core';
 import { html, LitElement, property } from 'lit-element';
 import { sharedStyles } from '../sharedStyles';
 
@@ -10,9 +9,6 @@ export abstract class HodCalendarEvent extends LitElement {
    * This is a description of a property with an attribute with exactly the same name: "color".
    */
   @property({ type: String }) title = 'Hey there';
-
-  /** Dependencies */
-  abstract get _apolloClient(): ApolloClient<any>;
 
   /** Private properties */
 
