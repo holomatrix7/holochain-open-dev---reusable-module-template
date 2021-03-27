@@ -16,6 +16,7 @@
       import { html, render } from 'lit-html';
       import ConductorApi from '@holochain/conductor-api';
       import { HodCalendarEvent } from '../dist';
+      import { connectDeps } from '@holochain-open-dev/common';
 
       (async function () {
         let store = undefined;
@@ -28,7 +29,10 @@
 
         const cellId = appInfo.cell_data[0].cell_id;
 
-        customElements.define('hod-calendar-event', HodCalendarEvent);
+        customElements.define(
+          'hod-calendar-event',
+          connectDeps(HodCalendarEvent, { appWebsocket, cellId })
+        );
       })();
     </script>
   </body>
