@@ -1,13 +1,17 @@
 import { html, LitElement, property } from 'lit-element';
-import { connectDeps, DepsElement } from '@holochain-open-dev/common';
+import {
+  connectDeps,
+  DepsElement,
+  BaseElement,
+} from '@holochain-open-dev/common';
 import { sharedStyles } from '../sharedStyles';
 import { AppWebsocket, CellId } from '@holochain/conductor-api';
+import { CalendarDeps } from '../types';
 
 // TODO: create your own elements
-export abstract class HodCalendarEvent extends DepsElement<{
-  appWebsocket: AppWebsocket;
-  cellId: CellId;
-}> {
+export abstract class HodCalendarEvent
+  extends BaseElement
+  implements DepsElement<CalendarDeps> {
   /** Public attributes */
 
   /**
@@ -23,14 +27,16 @@ export abstract class HodCalendarEvent extends DepsElement<{
     return sharedStyles;
   }
 
+  abstract get _deps(): CalendarDeps;
+
   async firstUpdated() {
-    const result = await this.deps.appWebsocket.callZome({
+    const result = await this._deps.appWebsocket.callZome({
       cap: null as any,
-      cell_id: this.deps.cellId,
+      cell_id: this._deps.cellId,
       zome_name: 'todo_rename_zome',
       fn_name: 'get_all_calendar_events',
       payload: null,
-      provenance: this.deps.cellId[1],
+      provenance: this._deps.cellId[1],
     });
     console.log('result', result);
   }
@@ -42,5 +48,3 @@ export abstract class HodCalendarEvent extends DepsElement<{
     `;
   }
 }
-
-connectDeps(HodCalendarEvent, {});
