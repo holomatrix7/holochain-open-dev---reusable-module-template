@@ -10,16 +10,20 @@
   </head>
   <body>
     <!-- TODO: change the element -->
-    <hod-calendar-event></hod-calendar-event>
+    <context-provider id="provider">
+      <calendar-event></calendar-event>
+    </context-provider>
 
     <script type="module">
-      import { html, render } from 'lit-html';
+      import {
+        CalendarEventEl,
+        CalendarEventsService,
+        TODO_REPLACE_NAME_CONTEXT,
+      } from '../dist';
       import ConductorApi from '@holochain/conductor-api';
-      import { HodCalendarEvent } from '../dist';
-      import { connectDeps } from '@holochain-open-dev/common';
+      import { ContextProviderElement } from '@holochain-open-dev/context';
 
       (async function () {
-        let store = undefined;
         const appWebsocket = await ConductorApi.AppWebsocket.connect(
           'ws://localhost:8888'
         );
@@ -29,10 +33,15 @@
 
         const cellId = appInfo.cell_data[0].cell_id;
 
-        customElements.define(
-          'hod-calendar-event',
-          connectDeps(HodCalendarEvent, { appWebsocket, cellId })
-        );
+        const service = new CalendarEventsService(appWebsocket, cellId);
+
+        customElements.define('context-provider', ContextProviderElement);
+
+        const provider = document.getElementById('provider');
+        provider.name = TODO_REPLACE_NAME_CONTEXT;
+        provider.value = service;
+
+        customElements.define('calendar-event', CalendarEventEl);
       })();
     </script>
   </body>

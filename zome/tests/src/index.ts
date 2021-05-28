@@ -42,12 +42,12 @@ orchestrator.registerScenario(
     const bob_calendar = bob_happ.cells[0];
 
     let calendarEvent = await alice_calendar.call(
-      "todo_rename_zome",
+      "hc_zome_todo_rename",
       "create_calendar_event",
       {
         title: "Event 1",
-        start_time: [Math.floor(Date.now() / 1000), 0],
-        end_time: [Math.floor(Date.now() / 1000) + 1000, 0],
+        startTime: Date.now(),
+        endTime: Date.now() + 1000,
         location: { Custom: "hiii" },
         invitees: [],
       }
@@ -57,8 +57,8 @@ orchestrator.registerScenario(
     await sleep(10);
 
     let calendarEvents = await alice_calendar.call(
-      "todo_rename_zome",
-      "get_all_calendar_events",
+      "hc_zome_todo_rename",
+      "get_my_calendar_events",
       null
     );
     t.equal(calendarEvents.length, 1);

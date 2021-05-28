@@ -35,7 +35,7 @@ This module is designed to be included in other DNAs, assuming as little as poss
 
 ## Documentation
 
-See our [`storybook`](https://holochain-open-dev.github.io/todo_rename_zome).
+See our [`storybook`](https://holochain-open-dev.github.io/hc_zome_todo_rename).
 
 ## Installation and usage
 
@@ -45,78 +45,67 @@ See our [`storybook`](https://holochain-open-dev.github.io/todo_rename_zome).
 2. Add a new `Cargo.toml` in that folder. In its content, paste the `Cargo.toml` content from any zome.
 3. Change the `name` properties of the `Cargo.toml` file to the name you want to give to this zome in your DNA.
 4. Add this zome as a dependency in the `Cargo.toml` file:
+
 ```toml
 [dependencies]
-todo_rename_zome = {git = "TODO_CHANGE_MODULE_URL", package = "todo_rename_zome"}
+hc_zome_todo_rename = {git = "https://github.com/holochain-open-dev/todo_rename", package = "hc_zome_todo_rename"}
 ```
+
 5. Create a `src` folder besides the `Cargo.toml` with this content:
+
 ```rust
-extern crate todo_rename_zome;
+extern crate hc_zome_todo_rename;
 ```
-6. If you haven't yet, in the top level `Cargo.toml` file of your DNA, add this to specify which version of holochain you want to target:
-```toml
-hc_utils = {git = "https://github.com/guillemcordoba/hc-utils", branch = "develop", package = "hc_utils"}
-hdk3 = {git = "https://github.com/holochain/holochain", rev = "7037aa2ccfb1ad9a8ece98eb379686f605dc1a0c", package = "hdk3"}
-holo_hash = {git = "https://github.com/holochain/holochain", rev = "7037aa2ccfb1ad9a8ece98eb379686f605dc1a0c", package = "holo_hash"}
-```
-7. Add the zome into your `*.dna.workdir/dna.json` file.
-8. Compile the DNA with the usual `CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown`.
 
-### Using the UI module
+6. Add the zome into your `dna.yaml` file with the name `todo_rename`.
+7. Compile the DNA with the usual `CARGO_TARGET=target cargo build --release --target wasm32-unknown-unknown`.
 
-1. Install the module with `npm install https://github.com/holochain-open-dev/todo_rename#ui-build`.
+### Including the UI
 
-2. Import and create the `mobx` store for profiles and for this module, and define the custom elements you need in your app:
+See the list of available elements [here](https://holochain-open-dev.github.io/todo_rename).
+
+1. Install the module with `npm install "https://github.com/holochain-open-dev/todo_rename#ui-build"`.
+
+2. Import and define the the elements you want to include:
 
 ```js
+import ConductorApi from "@holochain/conductor-api";
 import {
-  CreateOffer,
-  MyOffers,
-  PendingOfferList,
-  MyBalance,
-  PublicTransactorService,
-  TransactorStore,
-} from "@llavors-mutues/public-transactor";
-import { connectStore } from "@holochain-open-dev/common";
-import {
-  ProfilePrompt,
-  ProfilesStore,
-  ProfilesService,
-} from "@holochain-open-dev/profiles";
-import { AppWebsocket } from "@holochain/conductor-api";
+  MyCalendar,
+  CalendarEventsService,
+  CALENDAR_EVENTS_SERVICE_CONTEXT,
+} from "@holochain-open-dev/todo_rename";
+import { ContextProviderElement } from "@holochain-open-dev/context";
 
-async function setupTransactor() {
+async function setupCalendarEvents() {
   const appWebsocket = await ConductorApi.AppWebsocket.connect(
-    process.env.CONDUCTOR_URL,
-    12000
+    "ws://localhost:8888"
   );
+
   const appInfo = await appWebsocket.appInfo({
     installed_app_id: "test-app",
   });
+  const cellId = appInfo.cell_data[0].cell_id;
 
-  const cellId = appInfo.cell_data[0][0];
+  const service = new CalendarEventsService(appWebsocket, cellId);
 
-  const profilesService = new ProfilesService(appWebsocket, cellId);
-  const profilesStore = new ProfilesStore(profilesService);
-  const service = new PublicTransactorService(appWebsocket, cellId);
-  const store = new TransactorStore(service, profilesStore);
+  customElements.define("context-provider", ContextProviderElement);
 
-  customElements.define(
-    "profile-prompt",
-    connectStore(ProfilePrompt, profilesStore)
-  );
-  customElements.define("create-offer", connectStore(CreateOffer, store));
-  customElements.define("my-offers", connectStore(MyOffers, store));
-  customElements.define("my-balance", connectStore(MyBalance, store));
+  const provider = document.getElementById("provider");
+  provider.name = CALENDAR_EVENTS_SERVICE_CONTEXT;
+  provider.value = service;
+
+  customElements.define("my-calendar", MyCalendar);
 }
 ```
 
-3. All the elements you have defined are now available to use as normal HTML tags:
+3. Include the elements in your html:
 
 ```html
-...
 <body>
-  <create-offer style="height: 400px; width: 500px"></create-offer>
+  <context-provider id="provider">
+    <my-calendar> </my-calendar>
+  </context-provider>
 </body>
 ```
 
