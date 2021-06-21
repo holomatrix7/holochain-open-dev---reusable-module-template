@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit-element';
+import { html, LitElement } from 'lit';
 import { state, property } from 'lit/decorators.js';
 
 import { requestContext } from '@holochain-open-dev/context';
@@ -6,7 +6,7 @@ import { requestContext } from '@holochain-open-dev/context';
 import { sharedStyles } from '../sharedStyles';
 import { TODO_REPLACE_NAME_CONTEXT } from '../types';
 import { CalendarEventsService } from '../calendar-events.service';
-import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements';
 
 // TODO: create your own elements
 
@@ -15,7 +15,7 @@ import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin';
  * @fires event-created - Fired after actually creating the event, containing the new CalendarEvent
  * @csspart event-title - Style the event title textfield
  */
-export class CalendarEventEl extends ScopedRegistryHost(LitElement) {
+export class CalendarEventEl extends ScopedElementsMixin(LitElement) {
   /** Public attributes */
 
   /**

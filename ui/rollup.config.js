@@ -25,8 +25,6 @@ export default {
       target: 'es6',
     }),
     resolve(),
-    commonjs({
-      include: [],
-    }),
+    commonjs(),
   ],
 };
